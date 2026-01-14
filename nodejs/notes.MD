@@ -1,0 +1,1 @@
+- To run NodeJS code, run command `node server.js` in terminal.
