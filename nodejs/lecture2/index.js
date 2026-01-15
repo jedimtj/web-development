@@ -10,14 +10,18 @@ fs.readFile(path.join(__dirname, 'files', 'starter.txt'), (err, data) => {
 
 console.log("Hello...");
 
+// This way if we have more async operations that need to be done in a sequence, we keep nesting them inside callbacks
+// This is known as "callback hell"
+ 
 fs.writeFile(path.join(__dirname, 'files', 'reply.txt'), 'Nice to meet you.', (err) => {
     if (err) throw err;
     console.log("Write complete.");
-});
 
-fs.appendFile(path.join(__dirname, 'files', 'test.txt'), 'Appending some text.', (err) => {
-    if (err) throw err;
-    console.log("Append complete.");
+    // Way to ensure that append happens after write on same file (since both functions are async)
+    fs.appendFile(path.join(__dirname, 'files', 'reply.txt'), '\n\nYes, it is!', (err) => {
+        if (err) throw err;
+        console.log("Append complete.");
+    });
 });
 
 // Event listener stays active throughout the lifetime of the process once registered
